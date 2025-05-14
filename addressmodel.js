@@ -1,0 +1,15 @@
+import mongoose from "mongoose";
+
+const addressSchema = new mongoose.Schema({
+  address_id:{type:String,unique:true},
+  type:{type:String,required:true,trim:true},
+  house_no:{type:Number,required:true ,trim:true},
+  street: { type: String, required: true ,trim:true},
+  city: { type: String, required: true ,trim:true},
+  state: { type: String, required: true ,trim:true},
+  postalCode: { type: String, required: true ,trim:true},
+}, { timestamps: true });
+
+const addressModel = mongoose.models.Address || mongoose.model('Address', addressSchema);
+export default addressModel;
+
