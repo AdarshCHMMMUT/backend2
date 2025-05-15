@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 // Fixed CORS configuration - combined into a single middleware call with proper options
 app.use(cors({
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:5173','zomato-frontend-blush.vercel.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
