@@ -47,7 +47,6 @@ export const update = async (req, res) => {
   }
 };
 
-
 export const updateAddress = async (req, res) => {
   const { firebaseUid, address } = req.body;
 
