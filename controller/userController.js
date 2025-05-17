@@ -1,5 +1,5 @@
 import categoryModel from "../categorymodel.js";
-import itemModel from "../itemmodel.js";
+import Itemmodel from "../itemmodel.js";
 import userModel from "../usermodel.js";
 
 export const getUserData = async(req,res) =>
@@ -28,12 +28,12 @@ export const getUserData = async(req,res) =>
 export const getItems = async(req,res) =>
 {
   try{
-       const itemsdata = await itemModel.find();
+       const itemsdata = await Itemmodel.find().lean();
        return res.json({success:true, itemsdata});
   }
   catch(error)
   {
-     return res.json({success:false, message: 'unable to get data ${error.message}'})
+     return res.json({success:false, message: `unable to get data ${error.message}`})
   }
 }
 

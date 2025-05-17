@@ -12,5 +12,5 @@ const itemSchema = new mongoose.Schema({
     rating:{type:Number}
 })
 
-const itemModel =mongoose.models.items || mongoose.model('items',itemSchema);
-export default itemModel;
+const Itemmodel =mongoose.models.items || mongoose.model('items',itemSchema);
+export default Itemmodel;

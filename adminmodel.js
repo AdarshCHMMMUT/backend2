@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const adminSchema = new mongoose.Schema({
     role: {type:String},
-    phone:{type:Number},
+    phone:{type:String},
     password: {type:String}
 })
 

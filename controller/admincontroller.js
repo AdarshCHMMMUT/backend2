@@ -1,4 +1,6 @@
 import adminmodel from "../adminmodel.js";
+import couponModel from "../couponmodel.js";
+import Variationmodel from "../variationmodel.js";
 
 
 
@@ -7,6 +9,7 @@ export const adminLogin = async(req,res) =>
   try{
    const {role,phone,password} = req.body;
    const admin = await adminmodel.findOne({role:role, phone:phone, password:password})
+   console.log(admin);
    if(admin)
    {
     res.cookie("admin",admin._id,{httpOnly:true,secure:true,sameSite:"none"})
@@ -14,13 +17,14 @@ export const adminLogin = async(req,res) =>
    }
    else
    {
-    res.status(400).json({message:"login failed"})
+    res.status(400).json({message:"login failed",role:role, phone:phone, password:password,admin})
    }}
    catch(error)
    {
     res.status(500).json({message:"server error"})
    }
 }
+
 
 export const adminLogout = async(req, res) =>
 {
@@ -52,12 +56,13 @@ export const addcoupon = async(req, res) =>
 {
   try{
     const {code,condition,discount, expiry , used,} = req.body;
-    const coupon = await adminmodel.create({ code,condition, discount, expired, used})
+    const coupon = await couponModel.create({ code,condition, discount, expiry, used})
+    console.log(coupon,code);
     res.status(200).json({message:"coupon added successfully", coupon})
   }
   catch(error)
   {
-    res.status(500).json({message:"server error"})
+    res.status(500).json({message:"server error",code, condition,discount, expiry, used})
   }
 }
 
@@ -71,4 +76,16 @@ export const getstaffs = async(req, res) =>
   {
     res.status(500).json({message:"server error"})
   }
+}
+export const getvariations = async(req,res) =>
+{
+  try{
+    const variations = await Variationmodel.find()
+    res.status(200).json({message:"variations fetched successfully", variations})
+  }
+  catch(error)
+  {
+    res.status(500).json({message:"server error"})
+  }
+
 }

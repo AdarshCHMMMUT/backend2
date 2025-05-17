@@ -7,6 +7,7 @@ adminRouter.post('/adminlogout', adminLogout);
 adminRouter.post('/addstaff', addstaff);
 adminRouter.post('/addcoupon', addcoupon);
 adminRouter.get('/getstaff', getstaffs);
+adminRouter.get('/getvariation', getstaffs);    
 
 
 export default adminRouter;
