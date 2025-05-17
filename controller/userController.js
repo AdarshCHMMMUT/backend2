@@ -30,7 +30,7 @@ export const getItems = async(req,res) =>
   try{
 
     
-       const itemsdata = await Itemmodel.find();
+       const itemsdata = await Itemmodel.find().lean();
        return res.json({success:true, itemsdata});
   }
   catch(error)
@@ -41,7 +41,7 @@ export const getItems = async(req,res) =>
 
 export const  getCategory = async(req,res)=>{
   try{
-    const categories = await categoryModel.find();
+    const categories = await categoryModel.find().lean();
     return res.json({success:true,categories});
   }
   catch(error){
