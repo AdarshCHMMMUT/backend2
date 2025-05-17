@@ -7,19 +7,25 @@ export const login = async (req, res) => {
   console.log(phone);
   console.log(firebaseUid);
   try {
-    const user = await userModel.findOne({ firebaseUid });
+    let user = await userModel.findOne({ firebaseUid });
     console.log(user);
-    if (!user) {
-      const newUser = new userModel({ phone, firebaseUid });
-      await newUser.save();
-    }
-    return res.json({ success: true });
-  }
-  catch (error) {
-    return res.json({ success: false, message: error.message })
-  }
 
-}
+    if (!user) {
+      user = new userModel({ phone, firebaseUid });
+      await user.save();
+    }
+
+    res.cookie('logindata', firebaseUid, {
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
+      httpOnly: true, 
+      secure: process.env.NODE_ENV === 'production',
+    });
+
+    return res.json({ success: true });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
 
 export const update = async (req, res) => {
   try {
@@ -113,7 +119,7 @@ export const raisecomplaint = async(req,res) =>{
 
 export const logout = async (req, res) => {
   try {
-    res.clearCookie('token', {
+    res.clearCookie('logindata', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',

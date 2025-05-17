@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
 import authRouter from './routes/authRoutes.js'
 import userRouter from "./routes/userRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
 
 
 const app = express();
@@ -12,7 +13,6 @@ const port = process.env.PORT || 4000
 connectDB();
 app.use(express.json());
 app.use(cookieParser());
-// Fixed CORS configuration - combined into a single middleware call with proper options
 app.use(cors({
   origin: ['http://localhost:5173','zomato-frontend-blush.vercel.app'],
   credentials: true,
@@ -28,6 +28,7 @@ app.get("/", (req, res) => {
   
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
+app.use('/api/admin', adminRouter)
 
 
 app.listen(port, ()=>console.log(`Server started on PORT: ${port}`));
