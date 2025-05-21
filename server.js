@@ -22,8 +22,7 @@ app.use(cors({
 
 
 // API Endpoints
-app.get("/", (req, res) => {
-    
+app.get("/", (req, res) => { 
     res.send("API is working fine");
   });
   

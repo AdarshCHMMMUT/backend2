@@ -14,16 +14,7 @@ const variationSchema = new mongoose.Schema({
     stock: {
         type: Number,
         required: true
-    },
-    product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Itemmodel',
-        required: true
-    },
-    images: [{
-        type: String,
-        required: true
-    }]
+    }
 
 })
 

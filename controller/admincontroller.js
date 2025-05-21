@@ -1,3 +1,4 @@
+import Addonmodel from "../addonmodel.js";
 import adminmodel from "../adminmodel.js";
 import couponModel from "../couponmodel.js";
 import Variationmodel from "../variationmodel.js";
@@ -88,4 +89,29 @@ export const getvariations = async(req,res) =>
     res.status(500).json({message:"server error"})
   }
 
+}
+export const addaddon = async(req,res)=>
+{
+  try{
+      const {name, price, description, category, veg, available } = req.body;
+      const addon = await Addonmodel.create({name, price, description, category, veg, available})
+      res.status(200).json({message:"addon added successfully", addon})
+  }
+  catch(err)
+  {
+    res.status(500).json({message:"server error",err })
+  }
+}
+
+export  const addvariation = async(req,res) =>
+{
+  try{
+    const {name, price, stock} = req.body;  
+    const variation = await Variationmodel.create({name, price,  stock})
+    res.status(200).json({message:"variation added successfully", variation})
+  }
+  catch(err)
+  {
+    res.status(500).json({message:"server error ", err})
+  }
 }

@@ -9,7 +9,9 @@ const itemSchema = new mongoose.Schema({
     longDescription:{type:String},
     image:{type:String},
     veg:{type:Boolean},
-    rating:{type:Number}
+    rating:{type:Number},
+    variation: [{ type: mongoose.Schema.Types.ObjectId, ref:'Variationmodel'}],
+    addon: [{ type: mongoose.Schema.Types.ObjectId,ref :'Addonmodel'}]
 })
 
 const Itemmodel =mongoose.models.items || mongoose.model('items',itemSchema);
