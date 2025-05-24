@@ -62,3 +62,24 @@ export const getwish = async(req, res) =>
     return res.json({success:false, message: 'server error',message: error.message});
   }
 }
+
+export const addwish = async (req, res) => {
+  try {
+    const { userId, itemId } = req.body;
+    let wishlistDoc = await wishmodel.findOne({ user: userId });
+
+    if (!wishlistDoc) {
+      wishlistDoc = await wishmodel.create({
+        user: userId,
+        wishlist: [itemId]
+      });
+    } else {
+      wishlistDoc.wishlist.push(itemId);
+      await wishlistDoc.save();
+    }
+
+    return res.json({ success: true, message: 'Wish added', data: wishlistDoc });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
