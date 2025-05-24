@@ -2,7 +2,8 @@ import Addonmodel from "../addonmodel.js";
 import adminmodel from "../adminmodel.js";
 import couponModel from "../couponmodel.js";
 import Variationmodel from "../variationmodel.js";
-
+import orderModel from "../ordermodel.js";
+import {  db } from '../src/firebase/firebaseadmin.js';
 
 
 export const adminLogin = async(req,res) =>
@@ -86,7 +87,7 @@ export const getvariations = async(req,res) =>
   }
   catch(error)
   {
-    res.status(500).json({message:"server error"})
+    res.status(500).json({message:`server error${error}`})
   }
 
 }
@@ -115,3 +116,21 @@ export  const addvariation = async(req,res) =>
     res.status(500).json({message:"server error ", err})
   }
 }
+
+export const createOrder = async (req, res) => {
+  try{
+  const newOrder = new orderModel(req.body); 
+  const savedOrder = await newOrder.save();
+
+  await db.ref(`orders/${savedOrder._id}`).set({
+    status: "Placed",
+    timestamp: Date.now()
+  });
+
+  res.status(201).json({ message: "Order placed", orderId: savedOrder._id });
+}
+catch(err)
+{
+  res.status(500).json({message: `${err}`})
+}
+};
