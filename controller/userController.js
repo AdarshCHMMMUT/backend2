@@ -5,22 +5,18 @@ import wishmodel from "../wishmodel.js";
 export const getUserData = async(req,res) =>
 {
   try{
-       const {userId}  = req.body;
-       const user  = await userModel.findById(userId);
-       if(!user)return res.json({success:false, message: 'Invalid otp'});
+       const {firebaseUid}  = req.body;
+       const user  = await userModel.findOne({firebaseUid});
+       if(!user)return res.json({success:false, message: 'user not found'});
     
 
-        res.json({success:true,
-        userData:{
-            name: user.name,
-            isAccountVerified: user.isAccountVerified
-        }
+        res.json({success:true,message:`${user}`
        });
 
   }
   catch(error)
   {
-    return res.json({success:false, message: 'Invalid otp'});
+    return res.json({success:false, message: `${error}`});
 
   }
 }
