@@ -10,8 +10,7 @@ export const getUserData = async(req,res) =>
        if(!user)return res.json({success:false, message: 'user not found'});
     
 
-        res.json({success:true,message:`${user}`
-       });
+        res.json({success:true,user});
 
   }
   catch(error)
