@@ -29,7 +29,7 @@ export const login = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { name, email, phone, firebaseUid, dob, aniversary } = req.body;
+    const { name, email, phone, firebaseUid, dob, anniversary } = req.body;
 
     if (!firebaseUid) {
       return res.status(400).json({ message: "firebaseUid is required" });
@@ -37,7 +37,7 @@ export const update = async (req, res) => {
 
     const updatedUser = await userModel.findOneAndUpdate(
       { firebaseUid },
-      { name, email, phone, dob, aniversary },
+      { name, email, phone, dob, anniversary },
       { new: true, runValidators: true }
     );
 
