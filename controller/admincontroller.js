@@ -134,3 +134,22 @@ catch(err)
   res.status(500).json({message: `${err}`})
 }
 };
+
+export const updateStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { newStatus } = req.body;
+    if (!newStatus) {
+      return res.status(400).json({ message: "newStatus is required in request body" });
+    }
+    console.log(orderId);
+    console.log(newStatus);
+    await db.ref(`orders/${orderId}/status`).set(newStatus);
+    await orderModel.findByIdAndUpdate(orderId, { status: newStatus });
+    
+    res.status(200).json({ message: "Status updated successfully" });
+  } catch (error) {
+    console.error("Error updating status:", error);
+    res.status(500).json({ message: "Failed to update status", error: error.message });
+  }
+};

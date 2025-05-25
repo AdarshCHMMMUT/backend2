@@ -1,5 +1,5 @@
 import e from "express";
-import { addaddon, addcoupon, addstaff, addvariation, adminLogin, adminLogout, createOrder, getstaffs, getvariations } from "../controller/admincontroller.js";
+import { addaddon, addcoupon, addstaff, addvariation, adminLogin, adminLogout, createOrder, getstaffs, getvariations, updateStatus } from "../controller/admincontroller.js";
 
 const adminRouter = e.Router();
 adminRouter.post('/adminlogin',adminLogin);
@@ -11,5 +11,6 @@ adminRouter.post('/addvariation', addvariation);
 adminRouter.get('/getstaff', getstaffs);
 adminRouter.get('/getvariation', getvariations);    
 adminRouter.post('/createorder', createOrder);
+adminRouter.put('/updatestatus/:orderId', updateStatus);
 
 export default adminRouter;
