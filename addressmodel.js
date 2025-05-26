@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const addressSchema = new mongoose.Schema({
   address_id:{type:String,unique:true},
   type:{type:String,required:true,trim:true},
