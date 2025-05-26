@@ -91,3 +91,17 @@ export const getAddresses = async (req, res) => {
     return res.status(500).json({ success: false, message: `Server error: ${error.message}` });
   }
 }
+export const deleteaddress = async (req, res) => {
+  try {
+    const { firebaseUid, addressId } = req.body;
+    const user = await userModel.findOne({ firebaseUid }); 
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    user.addresses = user.addresses.filter(id => id.toString() !== addressId);
+    await user.save();
+    return res.json({ success: true, message: 'Address deleted successfully' });
+  } catch (error) {  
+    return res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+  }
+}
