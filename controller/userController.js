@@ -100,7 +100,7 @@ export const deleteaddress = async (req, res) => {
     }
     user.addresses = user.addresses.filter(id => id.toString() !== addressId);
     await user.save();
-    return res.json({ success: true, message: 'Address deleted successfully' });
+    return res.json({ success: true, message: 'Address deleted successfully', addresses: user.addresses });
   } catch (error) {  
     return res.status(500).json({ success: false, message: `Server error: ${error.message}` });
   }
