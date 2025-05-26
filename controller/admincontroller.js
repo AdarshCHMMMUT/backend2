@@ -4,6 +4,7 @@ import couponModel from "../couponmodel.js";
 import Variationmodel from "../variationmodel.js";
 import orderModel from "../ordermodel.js";
 import {  db } from '../src/firebase/firebaseadmin.js';
+// import Itemmodel from "../itemmodel.js";
 
 
 export const adminLogin = async(req,res) =>
@@ -116,6 +117,21 @@ export  const addvariation = async(req,res) =>
     res.status(500).json({message:"server error ", err})
   }
 }
+// export const pushvariation = async(req,res) =>
+// {
+//   try{
+
+//     console.log(req.body);
+//     const {_id, item_id} = req.body;
+//     const modified_item= await Itemmodel.findByIdAndUpdate(item_id, {$push:{variation:_id}},{ new: true })
+//     res.status(200).json({message:"variation added successfully", modified_item})
+//   }
+//   catch(err)
+//   {
+//     res.status(500).json({message:"server error ", message: err.message})
+//   }
+// }
+
 
 export const createOrder = async (req, res) => {
   try{

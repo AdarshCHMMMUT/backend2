@@ -78,3 +78,16 @@ export const addwish = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+export const getAddresses = async (req, res) => {
+  try {
+    const { firebaseUid } = req.body;
+    const user = await userModel.findOne({ firebaseUid }).populate('addresses');  
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    return res.json({ success: true, addresses: user.addresses });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+  }
+}
