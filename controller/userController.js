@@ -23,9 +23,7 @@ export const getUserData = async(req,res) =>
 export const getItems = async(req,res) =>
 {
   try{
-
-    
-       const itemsdata = await Itemmodel.find().populate('variation').lean();
+       const itemsdata = await Itemmodel.find().lean();
        return res.json({success:true, itemsdata});
   }
   catch(error)
