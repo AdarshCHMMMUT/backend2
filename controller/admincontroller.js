@@ -4,7 +4,7 @@ import couponModel from "../couponmodel.js";
 import Variationmodel from "../variationmodel.js";
 import orderModel from "../ordermodel.js";
 import {  db } from '../src/firebase/firebaseadmin.js';
-// import Itemmodel from "../itemmodel.js";
+import Itemmodel from "../itemmodel.js";
 
 
 export const adminLogin = async(req,res) =>
@@ -105,26 +105,12 @@ export const addaddon = async(req,res)=>
   }
 }
 
-export  const addvariation = async(req,res) =>
-{
-  try{
-    const {name, price, stock} = req.body;  
-    const variation = await Variationmodel.create({name, price,  stock})
-    res.status(200).json({message:"variation added successfully", variation})
-  }
-  catch(err)
-  {
-    res.status(500).json({message:"server error ", err})
-  }
-}
-// export const pushvariation = async(req,res) =>
+// export  const addvariation = async(req,res) =>
 // {
 //   try{
-
-//     console.log(req.body);
-//     const {_id, item_id} = req.body;
-//     const modified_item= await Itemmodel.findByIdAndUpdate(item_id, {$push:{variation:_id}},{ new: true })
-//     res.status(200).json({message:"variation added successfully", modified_item})
+//     const {name, price, stock} = req.body;  
+//     const variation = await Variationmodel.create({name, price,  stock})
+//     res.status(200).json({message:"variation added successfully", variation})
 //   }
 //   catch(err)
 //   {
@@ -132,7 +118,33 @@ export  const addvariation = async(req,res) =>
 //   }
 // }
 
+export const addvariation = async (req, res) => {
+  try {
+    const { name, price, stock, itemId } = req.body; // Assuming itemId is sent in the request body
+    
+    // Create new variation
+    const variation = await Variationmodel.create({ name, price, stock });
+    
+    // Update the item by pushing the variation ID to its variations array
+    const updatedItem = await Itemmodel.findByIdAndUpdate(
+      itemId,
+      { $push: { variations: variation._id } },
+      { new: true } // Returns the updated document
+    );
 
+    if (!updatedItem) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    res.status(200).json({
+      message: "Variation added and linked to item successfully",
+      variationId: variation._id,
+      variation
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
 export const createOrder = async (req, res) => {
   try{
   const newOrder = new orderModel(req.body); 
