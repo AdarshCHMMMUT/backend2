@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 const addressSchema = new mongoose.Schema({
+  lat: { type:Number, required: true },
+  lng: { type:Number, required: true },
   address_id:{type:String,unique:true},
   type:{type:String,required:true,trim:true},
   house_no:{type:Number,required:true ,trim:true},
