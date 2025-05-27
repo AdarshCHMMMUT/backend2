@@ -25,7 +25,7 @@ export const getItems = async(req,res) =>
   try{
 
     
-       const itemsdata = await Itemmodel.find().populate('addons').populate('variation').lean();
+       const itemsdata = await Itemmodel.find().populate('variation').lean();
        return res.json({success:true, itemsdata});
   }
   catch(error)
