@@ -128,7 +128,7 @@ export const addvariation = async (req, res) => {
     // Update the item by pushing the variation ID to its variations array
     const updatedItem = await Itemmodel.findByIdAndUpdate(
       itemId,
-      { $push: { variations: variation._id } },
+      { $push: { variation: variation._id } },
       { new: true } // Returns the updated document
     );
 
@@ -139,7 +139,8 @@ export const addvariation = async (req, res) => {
     res.status(200).json({
       message: "Variation added and linked to item successfully",
       variationId: variation._id,
-      variation
+      variation,
+      updatedItem
     });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
