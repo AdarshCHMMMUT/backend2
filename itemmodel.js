@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const itemSchema = new mongoose.Schema({
     name: {type:String},
     price:{type:String},
@@ -11,7 +10,7 @@ const itemSchema = new mongoose.Schema({
     image:{type:String},
     veg:{type:Boolean},
     rating:{type:Number},
-    variation: [{ type: mongoose.Schema.Types.ObjectId, ref:'Variationmodel'}],
+    variation: [{ type: mongoose.Schema.Types.ObjectId, ref:'variations'}],
     addon: [{ type: mongoose.Schema.Types.ObjectId,ref :'Addonmodel'}]
 })
 
