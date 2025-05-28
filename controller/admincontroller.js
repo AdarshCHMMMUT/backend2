@@ -148,11 +148,19 @@ export const deletevariation = async(req,res) =>
   try{
     const {variationId,itemId} = req.body;
     const variation = await Variationmodel.findByIdAndDelete(variationId);
+    if(!variation)
+    {
+      return res.status(404).json({message:"variation not found"})
+    }
     const updatedItem = await Itemmodel.findByIdAndUpdate(
       itemId,
       { $pull: { variation: variationId } },
       { new: true } 
     );
+    if(updatedItem.modifiedCount === 0)
+    {
+      return res.status(404).json({message:"item not found"})
+    }
     res.status(200).json({message:"variation deleted successfully", item: updatedItem});
   }
   catch(err)
