@@ -120,16 +120,13 @@ export const addaddon = async(req,res)=>
 
 export const addvariation = async (req, res) => {
   try {
-    const { name, price, stock, itemId } = req.body; // Assuming itemId is sent in the request body
-    
-    // Create new variation
+    const { name, price, stock, itemId } = req.body; 
     const variation = await Variationmodel.create({ name, price, stock });
-    
-    // Update the item by pushing the variation ID to its variations array
+    await variation.save();
     const updatedItem = await Itemmodel.findByIdAndUpdate(
       itemId,
       { $push: { variation: variation._id } },
-      { new: true } // Returns the updated document
+      { new: true } 
     );
 
     if (!updatedItem) {
