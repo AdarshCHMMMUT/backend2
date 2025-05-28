@@ -143,6 +143,23 @@ export const addvariation = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+export const deletevariation = async(req,res) =>
+{
+  try{
+    const {variationId,itemId} = req.body;
+    const variation = await Variationmodel.findByIdAndDelete(variationId);
+    const updatedItem = await Itemmodel.findByIdAndUpdate(
+      itemId,
+      { $pull: { variation: variationId } },
+      { new: true } 
+    );
+    res.status(200).json({message:"variation deleted successfully", item: updatedItem});
+  }
+  catch(err)
+  {
+    res.status(500).json({message:"server error", err: err.message})
+  }
+}
 export const createOrder = async (req, res) => {
   try{
   const newOrder = new orderModel(req.body); 
