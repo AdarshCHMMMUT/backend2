@@ -106,7 +106,15 @@ export const deleteaddress = async (req, res) => {
 export const getOrders = async (req, res) => {
   try {
     const { firebaseUid } = req.body;
-    const user = await userModel.findOne({ firebaseUid }).populate('orders');
+  const user = await userModel
+  .findOne({ firebaseUid })
+  .populate({
+    path: 'orders',
+    populate: {
+      path: 'items',
+    },
+  });
+
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
