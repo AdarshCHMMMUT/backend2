@@ -179,7 +179,7 @@ export const deletevariation = async(req,res) =>
 export const createOrder = async (req, res) => {
   try{
   const newOrder = new orderModel(req.body); 
-  const {id} = req.body.customer_id;
+  const id = req.body.customer_id;
   const savedOrder = await newOrder.save();
 
   const updateduser = await userModel.findByIdAndUpdate(
