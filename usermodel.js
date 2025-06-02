@@ -12,7 +12,8 @@ const customerSchema = new mongoose.Schema({
   complaints: [{
     complaint_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Complaint' },
     status: { type: String, enum: ['Open', 'Resolved', 'Pending'], default: 'Open' }
-  }]
+  }],
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }]
 }, {
   timestamps: true
 });

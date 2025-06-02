@@ -13,4 +13,7 @@ adminRouter.get('/getvariation', getvariations);
 adminRouter.post('/createorder', createOrder);
 adminRouter.put('/updatestatus/:orderId', updateStatus);
 adminRouter.delete('/deletevariation', deletevariation);
+// adminRouter.post('/additem',additem);
+// adminRouter.post()
+
 export default adminRouter;

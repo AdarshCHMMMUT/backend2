@@ -10,4 +10,5 @@ userRouter.get('/getwishlist',getwish)
 userRouter.post('/addwish',addwish)
 userRouter.post('/getaddresses', getAddresses);
 userRouter.post('/deleteaddress', deleteaddress);
+// userRouter.get('/getorders',getOrders);
 export default userRouter;
