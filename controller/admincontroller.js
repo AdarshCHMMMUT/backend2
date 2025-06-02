@@ -220,18 +220,18 @@ export const updateStatus = async (req, res) => {
   }
 };
 
-// export const additem = async(req,res) =>
-// {
-//   try{
-//     const {name, price, description,longDescription, image, veg} = req.body;
-//     const item = await Itemmodel.create({name, price, description,longDescription, image, veg});
-//     res.status(200).json({message:"item added successfully", item})
-//   }
-//   catch(err)
-//   {
-//     res.status(500).json({message:"server error", err: err.message})
-//   }
-// }
+export const additem = async(req,res) =>
+{
+  try{
+    const {name, price, description,longDescription, image, veg} = req.body;
+    const item = await Itemmodel.create({name, price, description,longDescription, image, veg});
+    res.status(200).json({message:"item added successfully", item})
+  }
+  catch(err)
+  {
+    res.status(500).json({message:"server error", err: err.message})
+  }
+}
 // export const deleteitem = async(req,res) =>
 // {
 //   try{
