@@ -1,5 +1,5 @@
 import express from 'express'
-import { addwish, deleteaddress, getAddresses, getCategory, getItems, getUserData, getwish } from '../controller/userController.js';
+import { addwish, deleteaddress, getAddresses, getCategory, getItems, getOrders, getUserData, getwish } from '../controller/userController.js';
 
 const userRouter = express.Router();
 
@@ -10,5 +10,5 @@ userRouter.get('/getwishlist',getwish)
 userRouter.post('/addwish',addwish)
 userRouter.post('/getaddresses', getAddresses);
 userRouter.post('/deleteaddress', deleteaddress);
-// userRouter.get('/getorders',getOrders);
+userRouter.post('/getorders',getOrders);
 export default userRouter;

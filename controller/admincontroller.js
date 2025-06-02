@@ -193,7 +193,7 @@ export const createOrder = async (req, res) => {
     timestamp: Date.now()
   });
 
-  res.status(201).json({ message: "Order placed", orderId: savedOrder._id });
+  res.status(201).json({ message: "Order placed",  order: savedOrder });
 }
 catch(err)
 {
