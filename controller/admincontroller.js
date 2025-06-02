@@ -5,6 +5,8 @@ import Variationmodel from "../variationmodel.js";
 import orderModel from "../ordermodel.js";
 import {  db } from '../src/firebase/firebaseadmin.js';
 import Itemmodel from "../itemmodel.js";
+import userModel from "../usermodel.js";
+import categoryModel from "../categorymodel.js";
 
 
 export const adminLogin = async(req,res) =>
@@ -96,7 +98,13 @@ export const addaddon = async(req,res)=>
 {
   try{
       const {name, price, description, category, veg, available } = req.body;
+      // take itemdId
       const addon = await Addonmodel.create({name, price, description, category, veg, available})
+      // const updatedItem = await Itemmodel.findByIdAndUpdate(
+      //   itemId,
+      //   { $push: { addons: addon._id } },
+      //   { new: true }
+      // );
       res.status(200).json({message:"addon added successfully", addon})
   }
   catch(err)
@@ -171,7 +179,14 @@ export const deletevariation = async(req,res) =>
 export const createOrder = async (req, res) => {
   try{
   const newOrder = new orderModel(req.body); 
+  const {id} = req.body.customer_id;
   const savedOrder = await newOrder.save();
+
+  const updateduser = await userModel.findByIdAndUpdate(
+      id,
+      { $push: { orders: savedOrder._id } },
+      { new: true } 
+    );
 
   await db.ref(`orders/${savedOrder._id}`).set({
     status: "Placed",
@@ -204,3 +219,60 @@ export const updateStatus = async (req, res) => {
     res.status(500).json({ message: "Failed to update status", error: error.message });
   }
 };
+
+// export const additem = async(req,res) =>
+// {
+//   try{
+//     const {name, price, description,longDescription, image, veg} = req.body;
+//     const item = await Itemmodel.create({name, price, description,longDescription, image, veg});
+//     res.status(200).json({message:"item added successfully", item})
+//   }
+//   catch(err)
+//   {
+//     res.status(500).json({message:"server error", err: err.message})
+//   }
+// }
+// export const deleteitem = async(req,res) =>
+// {
+//   try{
+//     const {itemId} = req.body;
+//     const item = await Itemmodel.findByIdAndDelete(itemId);
+//     if(!item)
+//     {
+//       return res.status(404).json({message:"item not found"})
+//     }
+//     res.status(200).json({message:"item deleted successfully", item})
+//   }
+//   catch(err)
+//   {
+//     res.status(500).json({message:"server error", err: err.message})
+//   }
+// }
+
+// export const addcategory = async(req,res) => 
+// {
+//   try {
+//     const { name, id } = req.body;
+//     const category = await categoryModel.create({ name, id });
+//     if (!category) {
+//       return res.status(400).json({ message: "Failed to create category" });
+//     }
+//     res.status(200).json({ message: "Category added successfully", category });
+//   } catch (err) {
+//     res.status(500).json({ message: "Server error", err: err.message });
+//   }
+// }
+
+// export const deletecategory = async(req,res) =>
+// {
+//   try {
+//     const { categoryId } = req.body;
+//     const category = await categoryModel.findByIdAndDelete(categoryId);
+//     if (!category) {
+//       return res.status(404).json({ message: "Category not found" });
+//     }
+//     res.status(200).json({ message: "Category deleted successfully", category });
+//   } catch (err) {
+//     res.status(500).json({ message: "Server error", err: err.message });
+//   }
+// }
