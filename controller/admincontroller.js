@@ -232,22 +232,22 @@ export const additem = async(req,res) =>
     res.status(500).json({message:"server error", err: err.message})
   }
 }
-// export const deleteitem = async(req,res) =>
-// {
-//   try{
-//     const {itemId} = req.body;
-//     const item = await Itemmodel.findByIdAndDelete(itemId);
-//     if(!item)
-//     {
-//       return res.status(404).json({message:"item not found"})
-//     }
-//     res.status(200).json({message:"item deleted successfully", item})
-//   }
-//   catch(err)
-//   {
-//     res.status(500).json({message:"server error", err: err.message})
-//   }
-// }
+export const deleteitem = async(req,res) =>
+{
+  try{
+    const {itemId} = req.body;
+    const item = await Itemmodel.findByIdAndDelete(itemId);
+    if(!item)
+    {
+      return res.status(404).json({message:"item not found"})
+    }
+    res.status(200).json({message:"item deleted successfully", item})
+  }
+  catch(err)
+  {
+    res.status(500).json({message:"server error", err: err.message})
+  }
+}
 
 // export const addcategory = async(req,res) => 
 // {
